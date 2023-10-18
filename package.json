@@ -24,6 +24,10 @@
   },
   "dependencies": {
     "@floating-ui/dom": "^1.5.3",
-    "@sveltejs/kit": "^1.25.2"
+    "@sveltejs/kit": "^1.25.2",
+    "@types/bcrypt": "^5.0.1",
+    "bcrypt": "^5.1.1",
+    "dotenv": "^16.3.1",
+    "mongoose": "^7.6.3"
   }
 }

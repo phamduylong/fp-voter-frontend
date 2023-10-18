@@ -1,5 +1,5 @@
 import {test, expect} from '@playwright/test';
-
+import {createTestUser, deleteTestUser} from "./testUtilities/testUtilities";
 
 
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -7,9 +7,11 @@ const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 test.describe('Testing login page', () => {
 
   test.beforeEach(async ({ page }) => {
+
     await page.goto('http://localhost:8081/login');
     await delay(1000);
   });
+
   test.afterEach(async ({ page }) => {
     await page.close();
   });
@@ -19,10 +21,11 @@ test.describe('Testing login page', () => {
     expect(loginText).toBeDefined();
   });
   test('Login with valid credentials', async ({page}) => {
+    await createTestUser();
     const usernameField = page.locator('input[title="Input username"]');
     const passwordField = page.locator('input[title="Input password"]');
-    await usernameField.fill('kendrick807');
-    await passwordField.fill('27190670#Kendrick');
+    await usernameField.fill('backendUnitTest');
+    await passwordField.fill('unitTest#0001');
     const loginButton = await page.getByRole('button', {name: 'Login'});
     await expect(loginButton).not.toBeDisabled();
     await loginButton.click();
@@ -30,6 +33,7 @@ test.describe('Testing login page', () => {
     await page.waitForURL("http://localhost:8081/home",{ timeout: 5000 });
     const currentUrl = page.url();
     expect(currentUrl).toBe("http://localhost:8081/home");
+    await deleteTestUser();
 
   });
   test('Login with username field starts with number', async ({page}) => {
