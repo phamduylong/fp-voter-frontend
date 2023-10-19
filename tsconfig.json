@@ -1,9 +1,10 @@
 {
   "compilerOptions": {
-    "target": "ES6",
-    "module": "commonjs",
+    "target": "es2017",
+    "module": "es2022",
     "outDir": "./dist",
-    "strict": true
+    "strict": true,
+    "moduleResolution": "node", // Ensure this is set to "node"
   },
   "include": ["tests/testUtilities/**/*.ts"],
   "exclude": ["node_modules"]
