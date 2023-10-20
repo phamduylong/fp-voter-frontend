@@ -19,7 +19,7 @@ const connectToDB = async ():Promise<void> => {
 };
 await connectToDB();
 export const createTestUser = async (): Promise<void> => {
-    const username: string = "backendUnitTest";
+    const username: string = "frontendUnitTest";
     let password: string = "unitTest#0001";
     const id: number = 1234;
     const salt: string = await bcrypt.genSalt();
@@ -37,7 +37,7 @@ export const createTestUser = async (): Promise<void> => {
 };
 
 export const deleteTestUser = async (): Promise<void> => {
-    await User.findOneAndRemove({ username: "backendUnitTest" });
+    await User.findOneAndRemove({ username: "frontendUnitTest" });
 };
 
 

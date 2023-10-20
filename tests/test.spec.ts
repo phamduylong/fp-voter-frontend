@@ -25,7 +25,7 @@ test.describe('Testing login page', () => {
     await createTestUser();
     const usernameField = page.locator('input[title="Input username"]');
     const passwordField = page.locator('input[title="Input password"]');
-    await usernameField.fill('backendUnitTest');
+    await usernameField.fill('frontendUnitTest');
     await passwordField.fill('unitTest#0001');
     const loginButton = await page.getByRole('button', {name: 'Login'});
     await expect(loginButton).not.toBeDisabled();
@@ -150,7 +150,7 @@ test.describe('Testing register page', () => {
   test('Register with valid credentials', async ({page}) => {
     const usernameField = page.locator('input[title="Input username"]');
     const passwordField = page.locator('input[title="Input password"]');
-    await usernameField.fill('backendUnitTest');
+    await usernameField.fill('frontendUnitTest');
     await passwordField.fill('unitTest#0001');
     const progressBar = await page.locator('.my-4');
     const progressBarValue = await progressBar.getAttribute('aria-valuenow');
@@ -295,7 +295,7 @@ test.describe('Testing home page', () => {
   test('Home page should be rendered & should be able to logout', async ({page}) => {
     const usernameField = page.locator('input[title="Input username"]');
     const passwordField = page.locator('input[title="Input password"]');
-    await usernameField.fill('backendUnitTest');
+    await usernameField.fill('frontendUnitTest');
     await passwordField.fill('unitTest#0001');
     const loginButton = await page.getByRole('button', {name: 'Login'});
     await expect(loginButton).not.toBeDisabled();
@@ -304,13 +304,13 @@ test.describe('Testing home page', () => {
     await page.waitForURL("http://localhost:8081/home",{ timeout: 5000 });
     const homePageUrl = page.url();
     expect(homePageUrl).toBe("http://localhost:8081/home");
-    const homeText = page.locator('text=Hello, backendUnitTest').first();
+    const homeText = page.locator('text=Hello, frontendUnitTest').first();
     expect(homeText).toBeDefined();
     const jwtToken = await page.evaluate(() => {
       return localStorage.getItem('jwt');
     });
     expect(jwtToken).not.toEqual('');
-    const greetingButton = await page.getByRole('button', {name: 'Hello, backendUnitTest'});
+    const greetingButton = await page.getByRole('button', {name: 'Hello, frontendUnitTest'});
     await greetingButton.click();
     const logoutLink = await  page.locator('a',{hasText: 'Logout'});
     await logoutLink.click();
