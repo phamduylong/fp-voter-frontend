@@ -40,4 +40,8 @@ export const deleteTestUser = async (): Promise<void> => {
     await User.findOneAndRemove({ username: "frontendUnitTest" });
 };
 
+export const deleteAllTestUsers = async (): Promise<void> => {
+    await User.deleteMany({ username: "frontendUnitTest" });
+};
+
 
