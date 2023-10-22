@@ -2,7 +2,7 @@
     import { goto } from "$app/navigation";
     import {alertState} from "$lib/alertStore.js";
     const usernameRegex = /^(?![\d_])(?!.*[^\w-]).{4,20}$/;
-    const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@#$%^&+=!*_])([A-Za-z\d@#$%^&+=!*_]){8,20}$/;
+    const passwordRegex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@#$%^&+=!*_])([A-Za-z\d@#$%^&+=!*_]){8,20}$/;
     let username = "";
     let password = "";
 
