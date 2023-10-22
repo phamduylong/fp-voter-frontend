@@ -1,10 +1,12 @@
 import { test, expect } from '@playwright/test';
 import { createTestUser, deleteTestUser, deleteAllTestUsers } from './testUtilities/testUtilities';
-import { loginForm, registerForm, homePage } from './testUtilities/formPage';
+import { loginPage } from './testUtilities/testClasses/loginPage';
+import { registerPage } from './testUtilities/testClasses/registerPage';
+import { homePage } from './testUtilities/testClasses/homePage';
 
 
-let login: loginForm;
-let register: registerForm;
+let login: loginPage;
+let register: registerPage;
 let home: homePage;
 
 
@@ -16,7 +18,7 @@ test.describe('Testing login page', () => {
   });
 
   test.beforeEach(async ({page}) => {
-    login = new loginForm(page);
+    login = new loginPage(page);
     await login.goToLoginPage();
     await delay(1000);
   });
@@ -80,7 +82,7 @@ test.describe('Testing register page', () => {
   });
 
   test.beforeEach(async ({page}) => {
-    register = new registerForm(page);
+    register = new registerPage(page);
     await register.goToRegisterPage();
     await delay(1000);
   });
@@ -142,7 +144,7 @@ test.describe('Testing home page', () => {
   });
   test.beforeEach(async ({page}) => {
     home = new homePage(page);
-    login = new loginForm(page);
+    login = new loginPage(page);
     await home.goToLoginPage();
     await delay(2500);
   });
