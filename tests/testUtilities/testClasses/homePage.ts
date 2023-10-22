@@ -26,7 +26,7 @@ export class homePage {
         const logoutLink = this.page.locator('a', { hasText: 'Logout' });
         await logoutLink.click();
         await this.page.waitForURL("http://localhost:8081/login",{ timeout: 5000 });
-        expect(this.page.url()).toBe("http://localhost:8081/login");
+        await expect(this.page.url()).toBe("http://localhost:8081/login");
     }
 
 }
