@@ -1,30 +1,23 @@
 <script>
   import { goto } from "$app/navigation";
-  import {
-    AppShell,
-    ListBox,
-    ListBoxItem,
-    popup,
-  } from "@skeletonlabs/skeleton";
+  import { afterUpdate } from "svelte";
+  import { AppShell, ListBox, ListBoxItem, popup } from "@skeletonlabs/skeleton";
   import { alertState } from "$lib/alertStore";
   import "../app.postcss";
-  import {
-    computePosition,
-    autoUpdate,
-    offset,
-    shift,
-    flip,
-    arrow,
-  } from "@floating-ui/dom";
+  import { computePosition, autoUpdate, offset, shift, flip, arrow } from "@floating-ui/dom";
   import { storePopup } from "@skeletonlabs/skeleton";
 
-  $: token =
-    typeof window !== "undefined" ? sessionStorage.getItem("jwt") : null;
+  let alertHideTimeout = null;
 
-  $: currentUser =
-    typeof window !== "undefined" ? sessionStorage.getItem("username") : null;
+  let token = "";
 
-  let comboboxValue = "";
+  let currentUser = "";
+
+  afterUpdate(() => {
+    // session and local storages should not be used here as they are defined usually when the DOM is rendered
+    currentUser = sessionStorage.getItem("username") ?? "anonymous";
+    token = sessionStorage.getItem("jwt") ?? "";
+  });
 
   const popupCombobox = {
     event: "click",
@@ -42,18 +35,19 @@
       },
     })
       .then(async (res) => {
-        if (res.ok) sessionStorage.removeItem("jwt");
+        sessionStorage.removeItem("jwt");
         sessionStorage.removeItem("userId");
-        alertState.show("Logged out successfully!", "success");
+        sessionStorage.removeItem("username");
+        if (res.ok) 
+          alertState.show("Logged out successfully!", "success");
+        
         await goto("/login");
       })
       .catch((err) => {
-        console.error(err);
+        alertState.show(err, "error");
       });
   }
   storePopup.set({ computePosition, autoUpdate, offset, shift, flip, arrow });
-
-  let alertHideTimeout = null;
 
   alertState.subscribe((currState) => {
     if (currState.visible) {
@@ -66,6 +60,7 @@
   });
 </script>
 
+
 <AppShell>
   <div slot="header">
     <nav class="list-nav flex justify-center w-full py-4 card">
@@ -74,14 +69,13 @@
       <a href="/results">Results</a>
       <a href="/candidates">Candidates</a>
       <button
-        class="btn variant-filled absolute right-10 !bg-inherit hover:!bg-gray-800 !text-inherit border-2"
+        class="btn variant-filled absolute right-10 !bg-inherit hover:!bg-gray-800 !text-inherit border-2 !invisible lg:!visible"
         use:popup={popupCombobox}
       >
         Hello, {currentUser}
         <div class="card py-2" data-popup="popupCombobox">
           <ListBox>
             <ListBoxItem
-              bind:group={comboboxValue}
               name="medium"
               value="profile"
               ><a href="/profile" class="anchor hover:!bg-transparent"
@@ -89,7 +83,6 @@
               ></ListBoxItem
             >
             <ListBoxItem
-              bind:group={comboboxValue}
               name="medium"
               value="logout"
               on:click={handleLogout}
@@ -107,6 +100,7 @@
   </div>
 </AppShell>
 
+<!--------------------------------------------------------------GLOBAL ALERTS ------------------------------------------------------------>
 {#if $alertState.visible}
   {#if $alertState.type === "error"}
     <aside
@@ -136,8 +130,6 @@
     </aside>
   {/if}
 {/if}
+<!---------------------------------------------------------------------------------------------------------------------------------------->
 
 <slot />
-
-<style>
-</style>
