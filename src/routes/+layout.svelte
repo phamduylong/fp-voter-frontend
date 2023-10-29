@@ -69,7 +69,7 @@
       <a href="/results">Results</a>
       <a href="/candidates">Candidates</a>
       <button
-        class="btn variant-filled absolute right-10 !bg-inherit hover:!bg-gray-800 !text-inherit border-2 !invisible lg:!visible"
+        class="btn variant-filled absolute right-10 !bg-inherit !text-inherit border-2 !invisible lg:!visible"
         use:popup={popupCombobox}
       >
         Hello, {currentUser}
@@ -104,7 +104,7 @@
 {#if $alertState.visible}
   {#if $alertState.type === "error"}
     <aside
-      class="alert variant-filled-error w-3/4 absolute top-[90%] left-1/2 -translate-x-1/2 -translate-y-1/2 h-auto"
+      class="alert variant-ghost-error w-3/4 absolute top-[90%] left-1/2 -translate-x-1/2 -translate-y-1/2 h-auto"
     >
       <div class="alert-message">
         {$alertState.message}
@@ -117,7 +117,7 @@
     </aside>
   {:else if $alertState.type === "warning"}
     <aside
-      class="alert variant-filled-warning w-3/4 absolute top-[90%] left-1/2 -translate-x-1/2 -translate-y-1/2 h-auto"
+      class="alert variant-ghost-warning w-3/4 absolute top-[90%] left-1/2 -translate-x-1/2 -translate-y-1/2 h-auto"
     >
       <div class="alert-message">
         {$alertState.message}

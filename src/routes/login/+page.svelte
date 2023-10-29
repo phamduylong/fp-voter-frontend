@@ -57,7 +57,7 @@
 </script>
 
 <main>
-    <div class="card absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-1/3 p-4">
+    <div class="card absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 p-4 w-3/4 lg:w-1/3">
         <h3 class="h3 m-4 text-center">Login</h3>
             <label class="label m-4">
                 <span>Username</span>
