@@ -5,10 +5,9 @@ import { browser } from '$app/environment';
 export async function load({ fetch }) {
     if(browser) {
         try {
-            const response = await fetch("http://localhost:8080/candidate/all", {
+            const response = await fetch("https://fingerprint-voter-server.onrender.com/candidate/all", {
                 headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${sessionStorage.getItem("jwt")}` 
+                    "Content-Type": "application/json"
                 }
             });
             console.log(response);
