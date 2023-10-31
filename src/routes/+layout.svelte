@@ -27,7 +27,7 @@
   };
 
   async function handleLogout() {
-    await fetch("http://localhost:8080/logout", {
+    await fetch("https://fingerprint-voter-server.onrender.com/logout", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -118,6 +118,19 @@
   {:else if $alertState.type === "warning"}
     <aside
       class="alert variant-ghost-warning w-3/4 absolute top-[90%] left-1/2 -translate-x-1/2 -translate-y-1/2 h-auto"
+    >
+      <div class="alert-message">
+        {$alertState.message}
+      </div>
+      <div class="alert-actions">
+        <button class="btn variant-filled font-bold" on:click={alertState.hide}
+          >X</button
+        >
+      </div>
+    </aside>
+  {:else if $alertState.type === "success"}
+    <aside
+      class="alert variant-ghost-success w-3/4 absolute top-[90%] left-1/2 -translate-x-1/2 -translate-y-1/2 h-auto"
     >
       <div class="alert-message">
         {$alertState.message}
