@@ -10,11 +10,19 @@
     $: passwordFormatInvalid = !passwordRegex.test(password);
     $: credentialsInvalid = username === "" || password === "" || usernameFormatInvalid || passwordFormatInvalid;
 
+    function parseJwtPayload (token) {
+        var base64Url = token.split('.')[1];
+        var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+        var jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
+            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+        }).join(''));
 
+        return JSON.parse(jsonPayload);
+    }
 
     function postUserData(){
         const user = {username: username, password: password}
-       fetch("http://localhost:8080/login", {
+       fetch("https://fingerprint-voter-server.onrender.com/login", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -24,8 +32,9 @@
                 const response = await res.json();
             switch (res.status) {
                 case 200:
-                    localStorage.setItem('jwt', response.token);
-                    sessionStorage.setItem('userId', response.userId); 
+                    sessionStorage.setItem('userId', parseJwtPayload(response.token).userId);
+                    sessionStorage.setItem('username', parseJwtPayload(response.token).username);
+                    sessionStorage.setItem('jwt', response.token); 
                     await goto('/home');
                     break;
                 
@@ -48,7 +57,7 @@
 </script>
 
 <main>
-    <div class="card absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-1/3 p-4">
+    <div class="card absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 p-4 w-3/4 lg:w-1/3">
         <h3 class="h3 m-4 text-center">Login</h3>
             <label class="label m-4">
                 <span>Username</span>

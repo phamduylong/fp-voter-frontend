@@ -17,7 +17,7 @@ module.exports = {
 	},
 	plugins: [
 		skeleton({
-			themes: { preset: [ "skeleton", "wintry", "modern" ] }
+			themes: { preset: [ "skeleton", "wintry", "modern", "crimson", "hamlindigo", "gold-nouveau", "rocket", "vintage", "sahara", "seafoam" ] }
 		}),
 		forms
 	]

@@ -24,7 +24,7 @@
     function postUserData(){
 
         const user = {username: username, password: password};
-        fetch("http://localhost:8080/register", {
+        fetch("https://fingerprint-voter-server.onrender.com/register", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -58,7 +58,7 @@
 
 <main>
 
-    <div class="card absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-1/3 p-4 ">
+    <div class="card absolute top-[55%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-3/4 p-4 lg:top-1/2 lg:w-1/3">
         <h3 class="h3 m-4 text-center">Register</h3>
         <label class="label m-4">
             <span>Username</span>
@@ -83,18 +83,20 @@
                     {max}
             />
 
+            Password must have:
+
         <ul class="list m-4">
             <li>
-                {passwordLengthSuffices ? "✅" : "❌"} Password must be between 8 and 20 characters long
+                {passwordLengthSuffices ? "✅" : "❌"} Between 8 and 20 characters long
             </li>
             <li>
-                {passwordContainsCapitalLetter ? "✅" : "❌"} Password must contain a capital letter
+                {passwordContainsCapitalLetter ? "✅" : "❌"} A capital letter
             </li>
             <li>
-                {passwordContainsDigit ? "✅" : "❌"} Password must contain a number
+                {passwordContainsDigit ? "✅" : "❌"} A number
             </li>
             <li>
-                {passwordContainsSpecialCharacter ? "✅" : "❌"} Password must contain at a special character
+                {passwordContainsSpecialCharacter ? "✅" : "❌"} A special character
             </li>
         </ul>
         <br>
