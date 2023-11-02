@@ -62,42 +62,40 @@
 
 
 <AppShell>
-  <div slot="header">
-    <nav class="list-nav flex justify-center w-full py-4 card">
+  <svelte:fragment slot="pageHeader">
+    <nav class="list-nav flex justify-center w-full py-4 card !rounded-none h-full">
       <a href="/home">Home</a>
-      <a href="/vote">Vote</a>
-      <a href="/results">Results</a>
       <a href="/candidates">Candidates</a>
-      <button
-        class="btn variant-filled absolute right-10 !bg-inherit !text-inherit border-2 !invisible lg:!visible"
-        use:popup={popupCombobox}
-      >
-        Hello, {currentUser}
-        <div class="card py-2" data-popup="popupCombobox">
-          <ListBox>
-            <ListBoxItem
-              name="medium"
-              value="profile"
-              ><a href="/profile" class="anchor hover:!bg-transparent"
-                >Profile</a
-              ></ListBoxItem
-            >
-            <ListBoxItem
-              name="medium"
-              value="logout"
-              on:click={handleLogout}
-            >
-              <a
-                class="anchor hover:!bg-transparent"
-                href="/"
-                on:click|preventDefault={handleLogout}>Logout</a
-              >
-            </ListBoxItem>
-          </ListBox>
-        </div>
-      </button>
+      <a href="/results">Results</a>
+      <a href="/about">About</a>
     </nav>
-  </div>
+  </svelte:fragment>
+  <slot />
+  <svelte:fragment slot="pageFooter">
+    <div class="card !rounded-none p-5">
+      Contrary to popular belief, Lorem Ipsum is not simply random text. 
+      It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. 
+      Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, 
+      consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. 
+      Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. 
+      This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..",
+       comes from a line in section 1.10.32.
+       Contrary to popular belief, Lorem Ipsum is not simply random text. 
+      It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. 
+      Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, 
+      consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. 
+      Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. 
+      This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..",
+       comes from a line in section 1.10.32.
+       Contrary to popular belief, Lorem Ipsum is not simply random text. 
+      It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. 
+      Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, 
+      consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. 
+      Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. 
+      This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..",
+       comes from a line in section 1.10.32.
+    </div>
+  </svelte:fragment>
 </AppShell>
 
 <!--------------------------------------------------------------GLOBAL ALERTS ------------------------------------------------------------>
@@ -145,4 +143,4 @@
 {/if}
 <!---------------------------------------------------------------------------------------------------------------------------------------->
 
-<slot />
+
