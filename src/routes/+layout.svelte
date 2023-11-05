@@ -1,32 +1,25 @@
 <script>
   import { goto } from "$app/navigation";
   import { afterUpdate } from "svelte";
-  import { AppShell, ListBox, ListBoxItem, popup } from "@skeletonlabs/skeleton";
+  import { AppShell } from "@skeletonlabs/skeleton";
   import { alertState } from "$lib/alertStore";
   import "../app.postcss";
-  import { computePosition, autoUpdate, offset, shift, flip, arrow } from "@floating-ui/dom";
-  import { storePopup } from "@skeletonlabs/skeleton";
+  import { page } from '$app/stores';  
 
   let alertHideTimeout = null;
-
-  let token = "";
-
   let currentUser = "";
-
+  let token = "";
   afterUpdate(() => {
     // session and local storages should not be used here as they are defined usually when the DOM is rendered
-    currentUser = sessionStorage.getItem("username") ?? "anonymous";
+    currentUser = sessionStorage.getItem("username") ?? "";
     token = sessionStorage.getItem("jwt") ?? "";
+    window.onbeforeunload = async () => {
+      await handleLogout(true);
+      return "We will log you out if you want to proceed with this action. Do you wish to continue?";
+    }
   });
 
-  const popupCombobox = {
-    event: "click",
-    target: "popupCombobox",
-    placement: "bottom",
-    closeQuery: "",
-  };
-
-  async function handleLogout() {
+  async function handleLogout(tabCloseAttempt = false) {
     await fetch("https://fingerprint-voter-server.onrender.com/logout", {
       method: "POST",
       headers: {
@@ -40,14 +33,12 @@
         sessionStorage.removeItem("username");
         if (res.ok) 
           alertState.show("Logged out successfully!", "success");
-        
-        await goto("/login");
+        if(!tabCloseAttempt) await goto("/");
       })
       .catch((err) => {
         alertState.show(err, "error");
       });
   }
-  storePopup.set({ computePosition, autoUpdate, offset, shift, flip, arrow });
 
   alertState.subscribe((currState) => {
     if (currState.visible) {
@@ -59,50 +50,42 @@
     }
   });
 </script>
-
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <AppShell>
   <svelte:fragment slot="pageHeader">
-    <nav class="list-nav flex justify-center w-full py-4 card !rounded-none h-full">
-      <a href="/home">Home</a>
-      <a href="/candidates">Candidates</a>
-      <a href="/results">Results</a>
-      <a href="/about">About</a>
-    </nav>
-  </svelte:fragment>
-  <slot />
-  <svelte:fragment slot="pageFooter">
-    <div class="card !rounded-none p-5">
-      Contrary to popular belief, Lorem Ipsum is not simply random text. 
-      It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. 
-      Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, 
-      consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. 
-      Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. 
-      This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..",
-       comes from a line in section 1.10.32.
-       Contrary to popular belief, Lorem Ipsum is not simply random text. 
-      It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. 
-      Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, 
-      consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. 
-      Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. 
-      This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..",
-       comes from a line in section 1.10.32.
-       Contrary to popular belief, Lorem Ipsum is not simply random text. 
-      It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. 
-      Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, 
-      consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. 
-      Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. 
-      This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..",
-       comes from a line in section 1.10.32.
+    <div class="grid grid-cols-3 gap-2 lg:gap-4 w-full py-4 card !rounded-none h-full">
+
+        <h2 class="flex justify-start h2 px-4 lg:px-10 font-jost font-bold relative top-1/2 -translate-y-1/2">PiNKK</h2>
+        <nav class="list-nav lg:flex justify-center">
+          <a href="/home">Home</a>
+          <a href="/candidates">Candidates</a>
+          <a href="/results">Results</a>
+        </nav>
+        {#if $page.url.pathname !== "/login"}
+          {#if currentUser === ""}
+            <div class="flex justify-end px-4 lg:px-10">
+              <button class="btn variant-filled !h-10 lg:h-auto" on:click={async () => { await goto("/login"); }}>
+                Login
+              </button>
+            </div>
+          {:else}
+            <div class="flex justify-end px-4 lg:px-10">
+              <button class="btn variant-filled" on:click={handleLogout}>
+                Logout
+              </button>
+            </div>
+          {/if}
+        {/if}
     </div>
   </svelte:fragment>
+  <slot />
 </AppShell>
 
 <!--------------------------------------------------------------GLOBAL ALERTS ------------------------------------------------------------>
 {#if $alertState.visible}
   {#if $alertState.type === "error"}
     <aside
-      class="alert variant-ghost-error w-3/4 absolute top-[90%] left-1/2 -translate-x-1/2 -translate-y-1/2 h-auto"
+      class="alert variant-filled-error w-3/4 absolute top-[90%] left-1/2 -translate-x-1/2 -translate-y-1/2 h-auto"
     >
       <div class="alert-message">
         {$alertState.message}
@@ -115,7 +98,7 @@
     </aside>
   {:else if $alertState.type === "warning"}
     <aside
-      class="alert variant-ghost-warning w-3/4 absolute top-[90%] left-1/2 -translate-x-1/2 -translate-y-1/2 h-auto"
+      class="alert variant-filled-warning w-3/4 absolute top-[90%] left-1/2 -translate-x-1/2 -translate-y-1/2 h-auto"
     >
       <div class="alert-message">
         {$alertState.message}
@@ -128,7 +111,7 @@
     </aside>
   {:else if $alertState.type === "success"}
     <aside
-      class="alert variant-ghost-success w-3/4 absolute top-[90%] left-1/2 -translate-x-1/2 -translate-y-1/2 h-auto"
+      class="alert variant-filled-success w-3/4 absolute top-[90%] left-1/2 -translate-x-1/2 -translate-y-1/2 h-auto"
     >
       <div class="alert-message">
         {$alertState.message}
