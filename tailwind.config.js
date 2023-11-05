@@ -13,7 +13,11 @@ module.exports = {
 		)
 	],
 	theme: {
-		extend: {},
+		extend: {
+			fontFamily: {
+				'jost': ['Jost', 'sans-serif']
+			  },
+		},
 	},
 	plugins: [
 		skeleton({
