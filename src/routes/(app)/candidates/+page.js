@@ -10,7 +10,6 @@ export async function load({ fetch }) {
                     "Content-Type": "application/json"
                 }
             });
-            console.log(response);
             if(!response.ok) {
                 throw error(response.status, { status: response.status, message: response.statusText });
             }

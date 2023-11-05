@@ -1,7 +1,13 @@
 <script>
   /** @type {import('./$types').PageData} */
   export let data;
-  import { Avatar } from "@skeletonlabs/skeleton";
+  import { Avatar, ProgressRadial } from "@skeletonlabs/skeleton";
+  import { afterUpdate } from "svelte";
+  let dataLoaded = false;
+
+  afterUpdate(() => {
+    dataLoaded = true;
+  });
 
   const getNameInitials = (name) => {
     const names = name.split(" ");
@@ -13,9 +19,14 @@
   };
 </script>
 
+{#if !dataLoaded}
+  <!--Server response time can be quite inconsistent. This should be considered for all pages-->
+  <ProgressRadial class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"/>
+{/if}
+
 {#if data.candidates}
   <div
-    class="grid grid-cols-1 md:grid-cols-2 landscape:lg:grid-cols-3 md:gap-2 lg:gap-4 overflow-scroll"
+    class="grid grid-cols-1 md:grid-cols-2 landscape:xl:grid-cols-3 md:gap-2 lg:gap-4 overflow-scroll"
   >
     {#each data.candidates as candidate}
       <div class="card mx-10 my-10 card-hover">
