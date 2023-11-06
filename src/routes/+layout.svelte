@@ -39,7 +39,6 @@
         alertState.show(err, "error");
       });
   }
-
   alertState.subscribe((currState) => {
     if (currState.visible) {
       alertHideTimeout = setTimeout(() => {
@@ -54,6 +53,7 @@
 <AppShell>
   <svelte:fragment slot="pageHeader">
     <div class="grid grid-cols-3 gap-2 lg:gap-4 w-full py-4 card !rounded-none h-full">
+
 
         <h2 class="flex justify-start h2 px-4 lg:px-10 font-jost font-bold relative top-1/2 -translate-y-1/2">PiNKK</h2>
         <nav class="list-nav lg:flex justify-center">
@@ -125,5 +125,3 @@
   {/if}
 {/if}
 <!---------------------------------------------------------------------------------------------------------------------------------------->
-
-
