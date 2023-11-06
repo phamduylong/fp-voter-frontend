@@ -47,8 +47,7 @@
             }
 
        }).catch(err => {
-           alertState.show();
-           console.error(err);
+           alertState.show(err, "error");
        });
 
 
@@ -101,7 +100,7 @@
         </ul>
         <br>
         <a href="http://localhost:8081/login" class="anchor m-4 absolute mb-10 left-1/2 -translate-x-1/2 -translate-y-1/2 w-3/4 text-center">
-            Already having an account? Click here to login!
+            Already have an account? Click here to login!
         </a>
         <br><br>
     </div>
