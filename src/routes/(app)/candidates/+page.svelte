@@ -1,22 +1,34 @@
 <script>
   /** @type {import('./$types').PageData} */
   export let data;
-  import { Avatar, ProgressRadial } from "@skeletonlabs/skeleton";
+  let candidates = data.candidates;
+  import { ProgressRadial } from "@skeletonlabs/skeleton";
   import { afterUpdate } from "svelte";
+  import PersonCard from "$lib/components/PersonCard.svelte";
   let dataLoaded = false;
-
+  let userIsAdmin = false;
   afterUpdate(() => {
     dataLoaded = true;
+    userIsAdmin = sessionStorage.getItem("role") === "admin";
   });
+  const template = {
+    name: "New Candidate (edit this to add new candidate)",
+    message: `Lorem Ipsum on yksinkertaisesti testausteksti, jota tulostus- ja ladontateollisuudet käyttävät. 
+    Lorem Ipsum on ollut teollisuuden normaali testausteksti jo 1500-luvulta asti, jolloin tuntematon tulostaja otti kaljuunan 
+    ja sekoitti sen tehdäkseen esimerkkikirjan. Se ei ole selvinnyt vain viittä vuosisataa, mutta myös loikan elektroniseen kirjoitukseen, 
+    jääden suurinpiirtein muuntamattomana. Se tuli kuuluisuuteen 1960-luvulla kun Letraset-paperiarkit, joissa oli Lorem Ipsum pätkiä, 
+    julkaistiin ja vielä myöhemmin tietokoneen julkistusohjelmissa, kuten Aldus PageMaker joissa oli versioita Lorem Ipsumista.`,
+    img: "https://avatar.iran.liara.run/public",
+  }
 
-  const getNameInitials = (name) => {
-    const names = name.split(" ");
-    let initials = "";
-    names.forEach((n) => {
-      initials += n[0];
-    });
-    return initials;
-  };
+  const newCandidateHandler = (e) => {
+    candidates = [...candidates, e.detail.newCandidate];
+  }
+
+  const candidateDeleteHandler = (e) => {
+    candidates = candidates.filter(c => c.id !== e.detail.deletedCandidateId);
+  }
+
 </script>
 
 {#if !dataLoaded}
@@ -24,23 +36,13 @@
   <ProgressRadial class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"/>
 {/if}
 
-{#if data.candidates}
-  <div
-    class="grid grid-cols-1 md:grid-cols-2 landscape:xl:grid-cols-3 md:gap-2 lg:gap-4 overflow-scroll"
-  >
-    {#each data.candidates as candidate}
-      <div class="card mx-10 my-10 card-hover">
-        <header class="card-header flex justify-center">
-          <Avatar
-            src={candidate.img}
-            width="w-32"
-            rounded="rounded-full"
-            initials={getNameInitials(candidate.name)}
-          />
-        </header>
-        <section class="p-4 text-center text-xl">{candidate.name}</section>
-        <footer class="card-footer text-center">{candidate.message}</footer>
-      </div>
+{#if candidates}
+  <div class="grid grid-cols-1 md:grid-cols-2 landscape:xl:grid-cols-3 md:gap-2 lg:gap-4 overflow-scroll py-4 lg:py-12">
+    {#each candidates as candidate}
+      <PersonCard person={candidate} editable={true} on:deletecandidate={candidateDeleteHandler}/>
     {/each}
+    {#if userIsAdmin}
+      <PersonCard on:newcandidate={newCandidateHandler} editable={true} person={template}/>
+    {/if}
   </div>
 {/if}
