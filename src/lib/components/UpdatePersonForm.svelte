@@ -27,7 +27,7 @@
         payload.append("message", message);
         if(file) payload.append("file", file[0]);
 
-        fetch(`https://fingerprint-voter-server.onrender.com//candidate/update/id=${$modalStore[0].meta.candidate.id ?? null}`, {
+        fetch(`https://fingerprint-voter-server.onrender.com/candidate/update/id=${$modalStore[0].meta.candidate.id ?? null}`, {
             method: 'PUT',
             headers: {
                 Authorization: `Bearer ${sessionStorage.getItem("jwt")}`
@@ -67,7 +67,7 @@
         payload.append("message", message);
         payload.append("file", file[0]);
 
-        fetch(`https://fingerprint-voter-server.onrender.com//candidate/create`, {
+        fetch(`https://fingerprint-voter-server.onrender.com/candidate/create`, {
             method: 'POST',
             headers: {
                 Authorization: `Bearer ${sessionStorage.getItem("jwt")}`

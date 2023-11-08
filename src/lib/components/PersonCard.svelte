@@ -38,7 +38,7 @@
 
   const modalDeleteCallback = (ok) => {
     if (!ok) return;
-    fetch(`https://fingerprint-voter-server.onrender.com//candidate/delete/id=${person.id}`, {
+    fetch(`https://fingerprint-voter-server.onrender.com/candidate/delete/id=${person.id}`, {
       method: "DELETE",
       headers: {
         Authorization: `Bearer ${sessionStorage.getItem("jwt")}`,

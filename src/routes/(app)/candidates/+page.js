@@ -14,7 +14,6 @@ export async function load({ fetch }) {
                 throw error(response.status, { status: response.status, message: response.statusText });
             }
             const candidates = await response.json();
-            console.log(candidates);
             return { candidates: [ ...candidates ] };
         
         } catch(err) {
