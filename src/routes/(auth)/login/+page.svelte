@@ -33,7 +33,7 @@
 
   function postUserData() {
     const user = { username: username, password: password };
-    fetch("https://fingerprint-voter-server.onrender.com//login", {
+    fetch("https://fingerprint-voter-server.onrender.com/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
