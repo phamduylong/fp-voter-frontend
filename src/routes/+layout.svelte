@@ -61,7 +61,7 @@
         <h2 class="flex justify-start h2 px-4 lg:px-10 font-jost font-bold relative top-1/2 -translate-y-1/2 cursor-pointer select-none"
         on:click={() => {goto("/")}}>PiNKK</h2>
         <nav class="list-nav lg:flex justify-center">
-          <a href="/home">Home</a>
+          <a href="/">Home</a>
           <a href="/candidates">Candidates</a>
           <a href="/results">Results</a>
         </nav>
