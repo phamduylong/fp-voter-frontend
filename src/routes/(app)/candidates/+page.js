@@ -13,11 +13,14 @@ export async function load({ fetch }) {
             if(!response.ok) {
                 throw error(response.status, { status: response.status, message: response.statusText });
             }
-            const candidates = await response.json();
-            return { candidates: [ ...candidates ] };
+            if(response.status === 200) { 
+                const candidates = await response.json();
+                return { candidates: candidates }; 
+            }
         
         } catch(err) {
-            throw error(err.status, { status: err.status, message: err.message });
+            if(err.status && err.message) throw error(err.status, { status: err.status, message: err.message });
+            throw error(500, { status: 500, message: "Server failure while loading page. Please try again." });
         }
     }
 }

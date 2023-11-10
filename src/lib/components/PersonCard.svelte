@@ -67,7 +67,7 @@
   {#if editable && userIsAdmin}
     <div class="flex justify-end p-2">
       <button
-        class="btn variant-outline"
+        class="btn-icon variant-outline mx-2"
         on:click={() => {
           const modal = {
             type: "component",
@@ -85,7 +85,7 @@
       >
       {#if person.id !== null && person.id !== undefined}
         <button
-          class="btn variant-outline"
+          class="btn-icon variant-outline mx-2"
           on:click={() => {
             const modal = {
               type: "confirm",

@@ -3,7 +3,7 @@
 	export let data;
 </script>
 <br>
-<h1 class="flex justify-center text-xl"><b>{data.title}</b></h1>
+<h3 class="h3 flex justify-center"><b>{data.title}</b></h3>
 <div class="w-full flex justify-center text-justify p-4 lg:p-10">
 <div>
 	{#each data.content as paragraph}
