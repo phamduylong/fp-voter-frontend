@@ -7,6 +7,7 @@
   import { page } from '$app/stores';  
   import { initializeStores } from '@skeletonlabs/skeleton';
   import UpdatePersonForm from "$lib/components/UpdatePersonForm.svelte";
+  import { LightSwitch } from '@skeletonlabs/skeleton';
 
   initializeStores();
   const modalComponents = {
@@ -21,7 +22,7 @@
     token = sessionStorage.getItem("jwt") ?? "";
   });
 
-  async function handleLogout(tabCloseAttempt = false) {
+  async function handleLogout() {
     await fetch("https://fingerprint-voter-server.onrender.com/logout", {
       method: "POST",
       headers: {
@@ -37,7 +38,7 @@
       .catch((err) => {
         alertState.show(err, "error");
       }).finally(() => {
-        window.location.reload();
+        goto("/");
       });
   }
 
@@ -82,6 +83,7 @@
         {/if}
     </div>
   </svelte:fragment>
+  <LightSwitch class="m-2 absolute right-2"/>
   <slot />
 </AppShell>
 

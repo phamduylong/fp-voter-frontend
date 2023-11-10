@@ -3,7 +3,7 @@
 	export let data;
 </script>
 <br>
-<h1 class="text-xl flex justify-center h1"><b>{data.title}</b></h1>
+<h3 class="flex justify-center h3"><b>{data.title}</b></h3>
 <br>
 <div class="text-justify w-full p-4 lg:p-10">
 	<i class="fa fa-calendar"></i>&nbsp;<b>Last updated:</b> 9.11.2023<br><br>
