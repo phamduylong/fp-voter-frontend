@@ -76,7 +76,7 @@
             meta: {
               candidate: person,
               //dummyCandidate is used to determine whether to create or update candidate
-              dummyCandidate: !person.id,
+              dummyCandidate: !person.id && person.id !== 0,
             },
             response: modalCallback
           };

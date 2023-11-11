@@ -109,7 +109,7 @@
 			</label>
 			<label class="label">
 				<span>Message</span>
-				<textarea class="input" type="email" bind:value={message} placeholder="Candidate's messages" />
+				<textarea class="textarea" rows="5" type="email" bind:value={message} placeholder="Candidate's messages" />
 			</label>
             <label class="label">
                 <span>Image</span>
