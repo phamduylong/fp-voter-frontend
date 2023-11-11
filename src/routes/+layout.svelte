@@ -75,7 +75,7 @@
             </div>
           {:else}
             <div class="flex justify-end px-4 lg:px-10">
-              <button class="btn variant-filled" on:click={handleLogout}>
+              <button class="btn variant-filled !h-10 lg:h-auto" on:click={handleLogout}>
                 Logout
               </button>
             </div>
@@ -83,7 +83,7 @@
         {/if}
     </div>
   </svelte:fragment>
-  <LightSwitch class="m-2 absolute right-2"/>
+  <LightSwitch class="m-2 md:m-4 relative float-right clear-right "/>
   <slot />
 </AppShell>
 
