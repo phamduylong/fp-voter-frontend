@@ -1,11 +1,18 @@
 <script>
   import { goto } from "$app/navigation";
   import { afterUpdate } from "svelte";
-  import { AppShell } from "@skeletonlabs/skeleton";
+  import { AppShell, Modal } from '@skeletonlabs/skeleton';
   import { alertState } from "$lib/alertStore";
   import "../app.postcss";
   import { page } from '$app/stores';  
+  import { initializeStores } from '@skeletonlabs/skeleton';
+  import UpdatePersonForm from "$lib/components/UpdatePersonForm.svelte";
+  import { LightSwitch } from '@skeletonlabs/skeleton';
 
+  initializeStores();
+  const modalComponents = {
+    updatePersonForm: { ref: UpdatePersonForm }
+  };
   let alertHideTimeout = null;
   let currentUser = "";
   let token = "";
@@ -19,7 +26,6 @@
     }
   });
 
-  async function handleLogout(tabCloseAttempt = false) {
     await fetch("https://fingerprint-voter-server.onrender.com/logout", {
       method: "POST",
       headers: {
@@ -28,15 +34,14 @@
       },
     })
       .then(async (res) => {
-        sessionStorage.removeItem("jwt");
-        sessionStorage.removeItem("userId");
-        sessionStorage.removeItem("username");
+        sessionStorage.clear();
         if (res.ok) 
           alertState.show("Logged out successfully!", "success");
-        if(!tabCloseAttempt) await goto("/");
       })
       .catch((err) => {
         alertState.show(err, "error");
+      }).finally(() => {
+        goto("/");
       });
   }
   alertState.subscribe((currState) => {
@@ -50,12 +55,14 @@
   });
 </script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<Modal components={modalComponents}/>
 <AppShell>
   <svelte:fragment slot="pageHeader">
     <div class="grid grid-cols-3 gap-2 lg:gap-4 w-full py-4 card !rounded-none h-full">
 
 
-        <h2 class="flex justify-start h2 px-4 lg:px-10 font-jost font-bold relative top-1/2 -translate-y-1/2">PiNKK</h2>
+        <h2 class="flex justify-start h2 px-4 lg:px-10 font-jost font-bold relative top-1/2 -translate-y-1/2 cursor-pointer select-none"
+        on:click={() => {goto("/")}}>PiNKK</h2>
         <nav class="list-nav lg:flex justify-center">
           <a href="/home">Home</a>
           <a href="/candidates">Candidates</a>
@@ -70,7 +77,7 @@
             </div>
           {:else}
             <div class="flex justify-end px-4 lg:px-10">
-              <button class="btn variant-filled" on:click={handleLogout}>
+              <button class="btn variant-filled !h-10 lg:h-auto" on:click={handleLogout}>
                 Logout
               </button>
             </div>
@@ -78,6 +85,7 @@
         {/if}
     </div>
   </svelte:fragment>
+  <LightSwitch class="m-2 md:m-4 relative float-right clear-right "/>
   <slot />
 </AppShell>
 

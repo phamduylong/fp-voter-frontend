@@ -44,13 +44,18 @@
         const response = await res.json();
         switch (res.status) {
           case 200:
+            const tokenPayload = parseJwtPayload(response.token);
             sessionStorage.setItem(
               "userId",
-              parseJwtPayload(response.token).userId
+              tokenPayload.userId
             );
             sessionStorage.setItem(
               "username",
-              parseJwtPayload(response.token).username
+              tokenPayload.username
+            );
+            sessionStorage.setItem(
+              "role",
+              tokenPayload.isAdmin ? "admin" : "user"
             );
             sessionStorage.setItem("jwt", response.token);
             await goto("/home");
