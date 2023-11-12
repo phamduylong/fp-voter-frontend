@@ -1,13 +1,11 @@
 <script>
   import { goto } from "$app/navigation";
   import { afterUpdate } from "svelte";
-  import { AppShell, Modal } from '@skeletonlabs/skeleton';
+  import { AppShell, Modal, LightSwitch, initializeStores } from '@skeletonlabs/skeleton';
   import { alertState } from "$lib/alertStore";
   import "../app.postcss";
-  import { page } from '$app/stores';  
-  import { initializeStores } from '@skeletonlabs/skeleton';
+  import { page } from '$app/stores';
   import UpdatePersonForm from "$lib/components/UpdatePersonForm.svelte";
-  import { LightSwitch } from '@skeletonlabs/skeleton';
 
   initializeStores();
   const modalComponents = {
@@ -26,6 +24,7 @@
     }
   });
 
+  async function handleLogout() {
     await fetch("https://fingerprint-voter-server.onrender.com/logout", {
       method: "POST",
       headers: {
