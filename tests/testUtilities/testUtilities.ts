@@ -40,12 +40,43 @@ const createTestUser = async (): Promise<void> => {
 
 };
 
+
+const createTestAdmin = async (): Promise<void> => {
+    const username: string = "frontendAdmin";
+    let password: string = "unitTest#0001";
+    const id: number = 1000 + randomInt(1, 1000);
+    const salt: string = await bcrypt.genSalt();
+    password = await bcrypt.hash(password, salt);
+
+    const isUserExist = await User.find({username: username});
+    if (isUserExist.length !== 0){
+        await deleteAllTestAdmins();
+    }
+    const newUser = new User({
+        username: username,
+        password: password,
+        id: id,
+        isAdmin: true,
+    });
+    await newUser.save();
+
+};
+
+
 const deleteTestUser = async (): Promise<void> => {
     await User.findOneAndRemove({ username: "frontendUnitTest" });
+};
+
+const deleteTestAdmin = async (): Promise<void> => {
+    await User.findOneAndRemove({ username: "frontendAdmin" });
 };
 
 const deleteAllTestUsers = async (): Promise<void> => {
     await User.deleteMany({ username: "frontendUnitTest" });
 };
 
-export { createTestUser, deleteTestUser, deleteAllTestUsers };
+const deleteAllTestAdmins = async (): Promise<void> => {
+    await User.deleteMany({ username: "frontendAdmin" });
+};
+
+export { createTestUser, createTestAdmin, deleteTestUser, deleteTestAdmin, deleteAllTestUsers, deleteAllTestAdmins };

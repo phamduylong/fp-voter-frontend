@@ -16,17 +16,15 @@ export class homePage {
 
     async retrieveJwtToken() {
         return await this.page.evaluate(() => {
-            return localStorage.getItem('jwt');
+            return sessionStorage.getItem('jwt');
         });
     }
 
     async logout(){
-        const greetingButton = this.page.locator('button:has-text("Hello, frontendUnitTest")');
-        await greetingButton.click();
-        const logoutLink = this.page.locator('a', { hasText: 'Logout' });
-        await logoutLink.click();
-        await this.page.waitForURL("http://localhost:8081/login",{ timeout: 5000 });
-        await expect(this.page.url()).toBe("http://localhost:8081/login");
+        const logoutButton = this.page.locator('button:has-text("Logout")');
+        await logoutButton.click();
+        await this.page.waitForURL("http://localhost:8081/home",{ timeout: 5000 });
+        expect(this.page.url()).toBe("http://localhost:8081/home");
     }
 
 }
