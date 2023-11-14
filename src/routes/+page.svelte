@@ -1,6 +1,8 @@
 <script>
     import { goto } from "$app/navigation";
+    import { browser } from '$app/environment';
     import { AppShell } from "@skeletonlabs/skeleton";
+    $: loggedIn = (browser) ? sessionStorage.getItem("jwt") !== null : false;
     const navigateToLoginPage = async () => {
         await goto("/login");
     }
@@ -11,7 +13,9 @@
     Vote for a better future
   </h2><br>
   <p class="lg:float-left">Every vote matters!</p><br><br>
-  <button class="btn variant-filled-secondary lg:float-left" on:click={navigateToLoginPage}>Login</button>
+  {#if !loggedIn}
+    <button class="btn variant-filled-secondary lg:float-left" on:click={navigateToLoginPage}>Login</button>
+  {/if}
 </div>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
