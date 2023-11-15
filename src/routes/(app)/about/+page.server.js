@@ -1,24 +1,22 @@
 import { error } from '@sveltejs/kit';
+import { PAT } from '$env/static/private';
 /** @type {import('./$types').PageLoad} */
 // eslint-disable-next-line no-unused-vars
 export async function load({ fetch }){
     try {
         const response = await fetch("https://api.github.com/repos/phamduylong/fp-voter-server/contributors", {
             headers: {
+                "Authorization": `Bearer ${PAT}`,
                 "Content-Type": "application/json"
             }
         });
         if(!response.ok) {
             throw error(response.status, { status: response.status, message: response.statusText });
         }
+        const res = [];
         if(response.status === 200) {
             const contributors = await response.json();
-            const res = [];
-            contributors.forEach(c => {
-                fetch(c.url).then(tmpRes => tmpRes.json()).then(contributor => res.push({name: contributor.login, img: contributor.avatar_url, message: contributor.bio}));
-            });
-            console.log("Loop completed")
-            return { contributors: res };
+            return { contributors: contributors.map(c => { return { name: c.login, img: c.avatar_url, message: "" } }) };
         }
 
     } catch(err) {
