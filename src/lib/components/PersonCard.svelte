@@ -107,6 +107,6 @@
       initials={getNameInitials(person.name)}
     />
   </header>
-  <section class="p-4 text-center text-xl">{person.name}</section>
+  <section class="p-4 text-center text-xl"><b>{person.name}</b></section>
   <footer class="card-footer text-justify">{person.message}</footer>
 </div>
