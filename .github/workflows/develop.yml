@@ -31,6 +31,8 @@ jobs:
 
     - name: Build Application
       run: npm run build
+      env:
+        PAT: ${{ secrets.PAT }}
 
   test:
     needs: [build]
