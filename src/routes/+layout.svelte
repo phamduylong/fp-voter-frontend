@@ -18,10 +18,6 @@
     // session and local storages should not be used here as they are defined usually when the DOM is rendered
     currentUser = sessionStorage.getItem("username") ?? "";
     token = sessionStorage.getItem("jwt") ?? "";
-    window.onbeforeunload = async () => {
-      await handleLogout(true);
-      return "We will log you out if you want to proceed with this action. Do you wish to continue?";
-    }
   });
 
   async function handleLogout() {
