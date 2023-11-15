@@ -1,8 +1,9 @@
 name: Node.js CI
 
 on:
-  push:
-    branches: 
+  pull_request:
+    branches:
+      - main
       - develop
 
 jobs:
@@ -38,14 +39,3 @@ jobs:
     steps:
     - name: Run test cases
       run: npm run test
-
-  deploy:
-    needs: [build]
-    runs-on: ubuntu-latest
-    timeout-minutes: 5
-    steps:
-          # Kill process or we'll get a timeout error    
-    - name: Deploy Application
-      env: 
-        DEPLOY_HOOK_URL: ${{ secrets.DEPLOY_HOOK_URL }}
-      run: curl -X POST $DEPLOY_HOOK_URL
