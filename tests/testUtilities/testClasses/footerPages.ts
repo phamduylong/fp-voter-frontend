@@ -30,7 +30,7 @@ export class footerPages {
         expect(this.page.url()).toBe("http://localhost:8081/about");
 
         const personCards = await this.page.locator('div.grid > div.card').all();
-        const devList = ['phamduylong', 'kendrick-807', 'jaakkoiot', 'Niklasnl'];
+        const devList = ['phamduylong', 'kendrick-807', 'jaakkoiot', 'Niklasnk'];
 
         for (const [index, personCard] of personCards.entries()) {
             const devInformation = await personCard.innerText();
