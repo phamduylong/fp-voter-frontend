@@ -2,8 +2,13 @@
   import { goto } from "$app/navigation";
   import { alertState } from "$lib/alertStore.js";
   import { ProgressBar } from "@skeletonlabs/skeleton";
-  const meters = ["","h-4 animate-pulse bg-red-600 h-2.5 rounded-full dark:bg-red-500", "h-4 animate-pulse bg-orange-600 h-2.5 rounded-full dark:bg-orange-500",
-    "h-4 animate-pulse bg-orange-600 h-2.5 rounded-full dark:bg-yellow-500", "h-4 animate-pulse bg-orange-600 h-2.5 rounded-full dark:bg-green-500"];
+  const meters = [
+    "h-4 animate-pulse bg-orange-600 h-2.5 rounded-full dark:bg-green-500",
+    "h-4 animate-pulse bg-orange-600 h-2.5 rounded-full dark:bg-green-500",
+    "h-4 animate-pulse bg-orange-600 h-2.5 rounded-full dark:bg-green-500",
+    "h-4 animate-pulse bg-orange-600 h-2.5 rounded-full dark:bg-green-500",
+    "h-4 animate-pulse bg-orange-600 h-2.5 rounded-full dark:bg-green-500"
+  ];
 
   $: passwordLengthSuffices = password.search(/^([A-Za-z\d@#$%^&+=!*_]){8,20}$/) > -1;
   $: passwordContainsCapitalLetter = password.search(/[A-Z]/) > -1;
