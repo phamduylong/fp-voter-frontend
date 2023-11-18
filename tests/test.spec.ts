@@ -1,16 +1,17 @@
 import { test, expect } from '@playwright/test';
-import { createTestUser, deleteTestUser, deleteAllTestUsers } from './testUtilities/testUtilities';
+import { createTestUser, createTestAdmin, deleteTestUser, deleteTestAdmin, deleteAllTestUsers, deleteAllTestAdmins } from './testUtilities/testUtilities';
 import { loginPage } from './testUtilities/testClasses/loginPage';
-import { registerPage } from './testUtilities/testClasses/registerPage';
 import { homePage } from './testUtilities/testClasses/homePage';
-
+import { utilityPages } from './testUtilities/testClasses/utilityPages';
+import { footerPages } from './testUtilities/testClasses/footerPages';
 
 let login: loginPage;
-let register: registerPage;
 let home: homePage;
+let utilities: utilityPages;
+let footers: footerPages;
 
 
-const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 test.describe('Testing login page', () => {
   test.beforeAll(async ( ) => {
@@ -76,68 +77,6 @@ test.describe('Testing login page', () => {
   });
 });
 
-test.describe('Testing register page', () => {
-  test.beforeAll(async () => {
-    await deleteAllTestUsers();
-  });
-
-  test.beforeEach(async ({page}) => {
-    register = new registerPage(page);
-    await register.goToRegisterPage();
-    await delay(1000);
-  });
-
-  test.afterEach(async () => {
-    await register.closePage();
-  });
-
-
-  test('Register with valid credentials', async () => {
-    await deleteAllTestUsers();
-    await register.register('frontendUnitTest', 'unitTest#0001');
-    await deleteTestUser();
-  });
-
-  test('Register with username field starts with a number', async () => {
-    await register.registerBtnShouldBeDisabled('2invalidUsername', 'invalid1_Password');
-  });
-
-  test('Register with username field contains a special character', async () => {
-    await register.registerBtnShouldBeDisabled('invalid%Username', 'invalid1_Password');
-  });
-
-  test('Register with username field contains a whitespace character', async () => {
-    await register.registerBtnShouldBeDisabled('invalid Username', 'invalid1_Password');
-  });
-
-  test('Register with username field is too short', async () => {
-    await register.registerBtnShouldBeDisabled('val', 'invalid1_Password');
-  });
-
-  test('Register with username field is too long', async () => {
-    await register.registerBtnShouldBeDisabled('validUsernameShouldNotBeThis', 'invalid1_Password');
-  });
-
-  test('Register with password field does not contain a capital letter', async () => {
-    await register.registerBtnShouldBeDisabled('invalidUsername', 'invalid1_password');
-  });
-
-  test('Register with password field does not contain a number', async () => {
-    await register.registerBtnShouldBeDisabled('invalidUsername', 'invalid_Password');
-  });
-
-  test('Register with password field does not contain a special character', async () => {
-    await register.registerBtnShouldBeDisabled('invalidUsername', 'invalid1Password');
-  });
-
-  test('Register with password field is too short', async () => {
-    await register.registerBtnShouldBeDisabled('invalidUsername', 'val1#Pa');
-  });
-
-  test('Register with password field is too long', async () => {
-    await register.registerBtnShouldBeDisabled('invalidUsername', 'This_Password_1s_not_valid');
-  });
-});
 test.describe('Testing home page', () => {
   test.beforeAll(async () => {
     await deleteAllTestUsers();
@@ -162,7 +101,54 @@ test.describe('Testing home page', () => {
     const jwtToken = await home.retrieveJwtToken();
     expect(jwtToken).not.toEqual(null);
     await home.logout();
+    await delay(1000);
     const emptyJwtToken = await home.retrieveJwtToken();
     expect(emptyJwtToken).toEqual(null);
+  });
+});
+
+
+test.describe('Testing candidate & result page', () => {
+  test.beforeAll(async () => {
+    await deleteAllTestUsers();
+  });
+  test.beforeEach(async ({page}) => {
+    utilities = new utilityPages(page)
+    login = new loginPage(page);
+    await utilities.goToLoginPage();
+    await delay(2500);
+  });
+
+  test.afterEach(async () => {
+    await deleteTestAdmin();
+    await utilities.closePage();
+  });
+
+  test('Verify admin rights functionality and result page rendering', async () => {
+    await createTestAdmin();
+    await delay(1000);
+    await login.login('frontendAdmin', 'unitTest#0001');
+    await utilities.shouldHaveAdminRights();
+    await utilities.resultPageShouldBeRendered();
+    await utilities.logout();
+  });
+});
+
+test.describe('Testing footer pages', () => {
+
+  test.beforeAll(async () => {
+    await deleteAllTestUsers();
+  });
+
+
+  test('Verify footer pages rendering', async ({page}) => {
+    footers = new footerPages(page);
+    await footers.goToMainPage();
+    await delay(2500);
+    await footers.faqPageShouldBeRendered();
+    await footers.aboutUsPageShouldBeRendered();
+    await footers.privacyPolicyPageShouldBeRendered();
+    await footers.termsAndConditionsPageShouldBeRendered();
+    await footers.closePage();
   });
 });

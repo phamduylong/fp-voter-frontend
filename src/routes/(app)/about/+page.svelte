@@ -6,7 +6,9 @@
     import {ProgressRadial} from "@skeletonlabs/skeleton";
     $: devs = data.contributors;
 </script>
-
+<svelte:head>
+    <title>About Us | FP Voter</title>
+</svelte:head>
 {#if (devs && devs.length)}
     <div
             class="grid grid-cols-1 grid-rows-1 md:grid-cols-2 landscape:xl:grid-cols-3 md:gap-2 lg:gap-4 overflow-scroll"

@@ -1,8 +1,9 @@
 name: Node.js CI
 
 on:
-  push:
-    branches: 
+  pull_request:
+    branches:
+      - main
       - develop
 
 jobs:
@@ -30,14 +31,31 @@ jobs:
 
     - name: Build Application
       run: npm run build
+      env:
+        PAT: ${{ secrets.PAT }}
 
-  deploy:
+  test:
     needs: [build]
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 15
     steps:
-          # Kill process or we'll get a timeout error    
-    - name: Deploy Application
-      env: 
-        DEPLOY_HOOK_URL: ${{ secrets.DEPLOY_HOOK_URL }}
-      run: curl -X POST $DEPLOY_HOOK_URL
+    - uses: actions/checkout@v3
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+
+
+    - name: Install packages
+      run: npm install
+
+    - name: Install Playwright
+      run: npx playwright install
+
+    - name: Run test cases
+      run: npm run test
+      env:
+        CI: true
+        MONGODB_URI: ${{ secrets.MONGODB_URI }}
+        PAT: ${{ secrets.PAT }}

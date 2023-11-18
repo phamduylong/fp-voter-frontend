@@ -6,7 +6,7 @@
     "dev": "vite dev --port 8081",
     "build": "vite build",
     "preview": "vite preview",
-    "test": "npx playwright test --retries=3 --workers 1"
+    "test": "npx playwright test --retries=3 --workers 2"
   },
   "type": "module",
   "devDependencies": {

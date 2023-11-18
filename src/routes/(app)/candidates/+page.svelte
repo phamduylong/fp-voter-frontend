@@ -30,7 +30,9 @@
   }
 
 </script>
-
+<svelte:head>
+  <title>Candidates | FP Voter</title>
+</svelte:head>
 {#if !dataLoaded}
   <!--Server response time can be quite inconsistent. This should be considered for all pages-->
   <ProgressRadial class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"/>

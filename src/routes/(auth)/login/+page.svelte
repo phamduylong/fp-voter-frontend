@@ -1,6 +1,23 @@
 <script>
   import { goto } from "$app/navigation";
   import { alertState } from "$lib/alertStore.js";
+  import { ProgressBar } from "@skeletonlabs/skeleton";
+  const meters = [
+    "h-4 animate-pulse bg-orange-600 h-2.5 rounded-full dark:bg-green-500",
+    "h-4 animate-pulse bg-orange-600 h-2.5 rounded-full dark:bg-green-500",
+    "h-4 animate-pulse bg-orange-600 h-2.5 rounded-full dark:bg-green-500",
+    "h-4 animate-pulse bg-orange-600 h-2.5 rounded-full dark:bg-green-500",
+    "h-4 animate-pulse bg-orange-600 h-2.5 rounded-full dark:bg-green-500"
+  ];
+
+  $: passwordLengthSuffices = password.search(/^([A-Za-z\d@#$%^&+=!*_]){8,20}$/) > -1;
+  $: passwordContainsCapitalLetter = password.search(/[A-Z]/) > -1;
+  $: passwordContainsDigit = password.search(/[0-9]/) > -1;
+  $: passwordContainsSpecialCharacter = password.search(/[@#$%^&+=!*_]/) > -1;
+  $: value = [passwordLengthSuffices, passwordContainsCapitalLetter, passwordContainsDigit, passwordContainsSpecialCharacter].filter(r => r === true).length;
+  $: max = 4;
+  $: meter = meters[value];
+
   const usernameRegex = /^(?![\d_])(?!.*[^\w-]).{4,20}$/;
   const passwordRegex =
     /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@#$%^&+=!*_])([A-Za-z\d@#$%^&+=!*_]){8,20}$/;
@@ -75,45 +92,64 @@
         alertState.show(err, "error");
       });
   }
-</script>
 
-<main>
-  <div
-    class="card absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 p-4 w-3/4 lg:w-1/3"
+</script>
+<svelte:head>
+  <title>Login | FP Voter</title>
+</svelte:head>
+<form class="card relative top-[45%] left-1/2 -translate-x-1/2 -translate-y-1/2 p-4 my-10 w-3/4 lg:w-1/3 max-h-1/4"
+  on:submit={postUserData}
+>
+  <h2 class="h2 m-4 text-center">Login</h2>
+  <label class="label m-4">
+    <span>Username</span>
+    <input
+      class="input"
+      title="Input username"
+      type="text"
+      bind:value={username}
+    />
+  </label>
+  <label class="label m-4 mb-10">
+    <span>Password</span>
+    <input
+      class="input"
+      title="Input password"
+      type="password"
+      bind:value={password}
+    />
+  </label>
+  <button
+    disabled={credentialsInvalid}
+    type="submit"
+    class="btn variant-filled mr-4 mt-4 mb-4 absolute left-1/2 -translate-x-1/2 -translate-y-1/2"
+    id="submitForm"
+    title={credentialsInvalid ? 'Credentials are not meeting requirements.' : null}>Login</button
   >
-    <h3 class="h3 m-4 text-center">Login</h3>
-    <label class="label m-4">
-      <span>Username</span>
-      <input
-        class="input"
-        title="Input username"
-        type="text"
-        bind:value={username}
-      />
-    </label>
-    <label class="label m-4 mb-10">
-      <span>Password</span>
-      <input
-        class="input"
-        title="Input password"
-        type="password"
-        bind:value={password}
-      />
-    </label>
-    <button
-      disabled={credentialsInvalid}
-      type="button"
-      class="btn variant-filled mr-4 mt-4 mb-4 absolute left-1/2 -translate-x-1/2 -translate-y-1/2"
-      id="submitForm"
-      on:click={postUserData}>Login</button
-    >
-    <br /><br />
-    <a
-      href="http://localhost:8081/register"
-      class="anchor m-4 absolute left-1/2 -translate-x-1/2 -translate-y-1/2 w-3/4 text-center"
-    >
-      Not a user yet? Register now.
-    </a>
-    <br /><br />
-  </div>
-</main>
+  <br /><br />
+  <ProgressBar
+          class="my-4"
+          {meter}
+          label="Progress Bar"
+          {value}
+          {max}
+  />
+
+  Password must have:
+  <ul class="list m-4">
+    <li>
+      {passwordLengthSuffices ? "✅" : "❌"} Between 8 and 20 characters long
+    </li>
+    <li>
+      {passwordContainsCapitalLetter ? "✅" : "❌"} A capital letter
+    </li>
+    <li>
+      {passwordContainsDigit ? "✅" : "❌"} A number
+    </li>
+    <li>
+      {passwordContainsSpecialCharacter ? "✅" : "❌"} A special character
+    </li>
+  </ul>
+
+</form>
+<br /><br />

@@ -35,7 +35,9 @@
     foot: [`<code class="code">${dataSource.length} candidates</code`, `<code class="code">${totalAmountOfVotes} votes</code>`, `<code class="code">100%</code>`]
   };
 </script>
-
+<svelte:head>
+  <title>Results | FP Voter</title>
+</svelte:head>
 <div
   class="relative top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 p-4 lg:p-10 w-full lg:w-3/4"
 >

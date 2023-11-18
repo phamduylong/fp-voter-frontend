@@ -1,4 +1,4 @@
-import { defineConfig, devices } from '@playwright/test';
+import { defineConfig } from '@playwright/test';
 
 
 export default defineConfig({
@@ -10,7 +10,7 @@ export default defineConfig({
   /* Opt out of parallel tests on CI. */
   workers: process.env.CI ? 1 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-  reporter: 'html',
+  reporter: 'list',
 
 
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
@@ -22,20 +22,20 @@ export default defineConfig({
   /* Configure projects for major browsers */
   projects: [
     {
-      name: 'chromium',
-      use: { ...devices['Desktop Chrome'] },
+      name: 'Google Chrome',
+      use: { channel: 'chrome' }
     },
 
     {
-      name: 'firefox',
-      use: { ...devices['Desktop Firefox'] },
-    },
-
-    {
-      name: 'webkit',
-      use: { ...devices['Desktop Safari'] },
-    },
+      name: 'Microsoft Edge',
+      use: { channel: 'msedge' },
+    }
 
   ],
+  webServer: {
+    command: 'npm run dev',
+    url: 'http://localhost:8081',
+    reuseExistingServer: true,
+  },
 
 });
