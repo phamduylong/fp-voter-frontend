@@ -42,6 +42,7 @@
   }
 
   // alert timeout to disappear
+
   alertState.subscribe((currState) => {
     if (currState.visible) {
       alertHideTimeout = setTimeout(() => {
