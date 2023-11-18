@@ -56,9 +56,7 @@
 <Modal components={modalComponents}/>
 <AppShell>
   <svelte:fragment slot="pageHeader">
-    <div class="grid grid-cols-3 gap-2 lg:gap-4 w-full py-4 card !rounded-none h-full">
-
-
+    <div class="relative grid grid-cols-3 gap-2 lg:gap-4 w-full py-4 card !rounded-none h-full">
         <a class="flex justify-start h2 px-4 lg:px-10 font-jost font-bold
         relative top-1/2 -translate-y-1/2 cursor-pointer select-none"
         href="/">PiNKK</a>
