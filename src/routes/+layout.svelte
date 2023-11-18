@@ -1,13 +1,11 @@
 <script>
   import { goto } from "$app/navigation";
   import { afterUpdate } from "svelte";
-  import { AppShell, Modal } from '@skeletonlabs/skeleton';
+  import { AppShell, Modal, LightSwitch, initializeStores } from '@skeletonlabs/skeleton';
   import { alertState } from "$lib/alertStore";
   import "../app.postcss";
-  import { page } from '$app/stores';  
-  import { initializeStores } from '@skeletonlabs/skeleton';
+  import { page } from '$app/stores';
   import UpdatePersonForm from "$lib/components/UpdatePersonForm.svelte";
-  import { LightSwitch } from '@skeletonlabs/skeleton';
 
   initializeStores();
   const modalComponents = {
@@ -16,6 +14,7 @@
   let alertHideTimeout = null;
   let currentUser = "";
   let token = "";
+
   afterUpdate(() => {
     // session and local storages should not be used here as they are defined usually when the DOM is rendered
     currentUser = sessionStorage.getItem("username") ?? "";
@@ -42,11 +41,12 @@
       });
   }
 
+  // alert timeout to disappear
   alertState.subscribe((currState) => {
     if (currState.visible) {
       alertHideTimeout = setTimeout(() => {
         alertState.hide();
-      }, 2500);
+      }, 4000);
     } else {
       clearTimeout(alertHideTimeout);
     }
@@ -56,11 +56,10 @@
 <Modal components={modalComponents}/>
 <AppShell>
   <svelte:fragment slot="pageHeader">
-    <div class="grid grid-cols-3 gap-2 lg:gap-4 w-full py-4 card !rounded-none h-full">
-
-
-        <h2 class="flex justify-start h2 px-4 lg:px-10 font-jost font-bold relative top-1/2 -translate-y-1/2 cursor-pointer select-none"
-        on:click={() => {goto("/")}}>PiNKK</h2>
+    <div class="relative grid grid-cols-3 gap-2 lg:gap-4 w-full py-4 card !rounded-none h-full">
+        <a class="flex justify-start h2 px-4 lg:px-10 font-jost font-bold
+        relative top-1/2 -translate-y-1/2 cursor-pointer select-none"
+        href="/">PiNKK</a>
         <nav class="list-nav lg:flex justify-center">
           <a href="/home">Home</a>
           <a href="/candidates">Candidates</a>
