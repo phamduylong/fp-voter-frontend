@@ -100,7 +100,7 @@
 <form class="card relative top-[45%] left-1/2 -translate-x-1/2 -translate-y-1/2 p-4 my-10 w-3/4 lg:w-1/3 max-h-1/4"
   on:submit={postUserData}
 >
-  <h1 class="h1 m-4 text-center">Login</h1>
+  <h2 class="h2 m-4 text-center">Login</h2>
   <label class="label m-4">
     <span>Username</span>
     <input
