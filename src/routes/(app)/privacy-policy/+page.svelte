@@ -2,6 +2,9 @@
 	/** @type {import('./$types').PageData} */
 	export let data;
 </script>
+<svelte:head>
+	<title>Privacy Policy | FP Voter</title>
+</svelte:head>
 <br>
 <h3 class="flex justify-center h3"><b>{data.title}</b></h3>
 <br>

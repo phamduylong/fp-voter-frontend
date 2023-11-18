@@ -7,7 +7,9 @@
         await goto("/login");
     }
 </script>
-
+<svelte:head>
+  <title>FP Voter</title>
+</svelte:head>
 <div class="absolute top-1/3 left-1/2 lg:left-[20%] -translate-x-1/2 -translate-y-1/2 text-center p-2 lg:p-10">
   <h2 class="h2">
     Vote for a better future

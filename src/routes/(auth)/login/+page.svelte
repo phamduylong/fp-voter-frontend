@@ -75,11 +75,15 @@
         alertState.show(err, "error");
       });
   }
-</script>
 
+</script>
+<svelte:head>
+  <title>Login | FP Voter</title>
+</svelte:head>
 <main>
-  <div
-    class="card absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 p-4 w-3/4 lg:w-1/3"
+  <form
+    class="card absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 p-4 my-4 w-3/4 lg:w-1/3"
+    on:submit={postUserData}
   >
     <h3 class="h3 m-4 text-center">Login</h3>
     <label class="label m-4">
@@ -102,10 +106,9 @@
     </label>
     <button
       disabled={credentialsInvalid}
-      type="button"
+      type="submit"
       class="btn variant-filled mr-4 mt-4 mb-4 absolute left-1/2 -translate-x-1/2 -translate-y-1/2"
-      id="submitForm"
-      on:click={postUserData}>Login</button
+      id="submitForm">Login</button
     >
     <br /><br />
     <a
@@ -115,5 +118,5 @@
       Not a user yet? Register now.
     </a>
     <br /><br />
-  </div>
+  </form>
 </main>
