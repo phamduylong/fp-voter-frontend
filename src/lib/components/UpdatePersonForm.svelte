@@ -115,7 +115,7 @@
                 <span>Image</span>
                 <FileDropzone name="files" on:change={onFileChosen} bind:files={file}>
                     <svelte:fragment slot="lead"><i class="fa fa-upload"></i></svelte:fragment>
-                    <svelte:fragment slot="message">Upload a new image for candidate (optional)</svelte:fragment><br>
+                    <svelte:fragment slot="message">Upload a new image for candidate {!$modalStore[0].meta.dummyCandidate ? "(optional)" : ""}</svelte:fragment><br>
                     
                     <div slot="meta" class="flex justify-center mt-6">
                         <Avatar
