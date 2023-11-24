@@ -10,13 +10,13 @@
 <svelte:head>
   <title>FP Voter</title>
 </svelte:head>
-<div class="absolute top-1/3 left-1/2 lg:left-[20%] -translate-x-1/2 -translate-y-1/2 text-center p-2 lg:p-10 my-20">
+<div class="relative top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 p-2 lg:p-10 mx-4 md:mx-6 lg:mx-10 my-20">
   <h2 class="h2">
     Vote for a better future
   </h2><br>
-  <p class="lg:float-left">Every vote matters!</p><br><br>
+  <p>Every vote matters!</p><br><br>
   {#if !loggedIn}
-    <button class="btn variant-filled-secondary lg:float-left" on:click={navigateToLoginPage}>Login</button>
+    <button class="btn variant-filled-secondary" on:click={navigateToLoginPage}>Login</button>
   {/if}
 </div>
 
@@ -36,10 +36,10 @@
         <div class="p-1 md:p-5 lg:p-10">
           <h4 class="h4">Quick Link</h4>
           <br>
-          &#129170;&nbsp;&nbsp;<a href="/faq" class="hover:anchor">FAQ</a><br>
-          &#129170;&nbsp;&nbsp;<a href="/about" class="hover:anchor">About Us</a><br>
-          &#129170;&nbsp;&nbsp;<a href="/privacy-policy" class="hover:anchor">Privacy Policy</a><br>
-          &#129170;&nbsp;&nbsp;<a href="/terms-conditions" class="hover:anchor">Terms and Conditions</a>
+          <span><i class="fa fa-caret-square-o-right"></i>&nbsp;<a href="/faq" class="hover:anchor">FAQ</a><br></span>
+          <span><i class="fa fa-caret-square-o-right"></i>&nbsp;<a href="/about" class="hover:anchor">About Us</a><br></span>
+          <span><i class="fa fa-caret-square-o-right"></i>&nbsp;<a href="/privacy-policy" class="hover:anchor">Privacy Policy</a><br></span>
+          <span><i class="fa fa-caret-square-o-right"></i>&nbsp;<a href="/terms-conditions" class="hover:anchor">Terms and Conditions</a></span>
         </div>
       </nav>
     </svelte:fragment>
