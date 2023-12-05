@@ -36,10 +36,10 @@
         <div class="p-1 md:p-5 lg:p-10">
           <h4 class="h4">Quick Link</h4>
           <br>
-          <span><i class="fa fa-caret-square-o-right"></i>&nbsp;<a href="/faq" class="hover:anchor">FAQ</a><br></span>
-          <span><i class="fa fa-caret-square-o-right"></i>&nbsp;<a href="/about" class="hover:anchor">About Us</a><br></span>
-          <span><i class="fa fa-caret-square-o-right"></i>&nbsp;<a href="/privacy-policy" class="hover:anchor">Privacy Policy</a><br></span>
-          <span><i class="fa fa-caret-square-o-right"></i>&nbsp;<a href="/terms-conditions" class="hover:anchor">Terms and Conditions</a></span>
+          <span><i class="fa fa-toggle-right"></i>&nbsp;&nbsp;<a href="/faq" class="hover:anchor">FAQ</a><br></span>
+          <span><i class="fa fa-toggle-right"></i>&nbsp;&nbsp;<a href="/about" class="hover:anchor">About Us</a><br></span>
+          <span><i class="fa fa-toggle-right"></i>&nbsp;&nbsp;<a href="/privacy-policy" class="hover:anchor">Privacy Policy</a><br></span>
+          <span><i class="fa fa-toggle-right"></i>&nbsp;&nbsp;<a href="/terms-conditions" class="hover:anchor">Terms and Conditions</a></span>
         </div>
       </nav>
     </svelte:fragment>
