@@ -3,7 +3,7 @@
   export let data;
   const dataSource = data.result.results || [];
   const totalAmountOfVotes = data.result.votes || 0;
-  const publishDate = new Date("January 1, 2024 00:00:00").getTime();
+  const publishDate = new Date("December 8, 2023 15:00:00").getTime();
   let remainingTime = publishDate - Date.now();
   let days = Math.floor(remainingTime / (1000 * 60 * 60 * 24));
   let hours = Math.floor(
