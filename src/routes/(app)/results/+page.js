@@ -12,8 +12,11 @@ export async function load({ fetch }) {
             const err = await response.json();
             throw error(response.status, { message: err.error });
         }
-        if (response.status === 200) { const result = await response.json(); return { result: result }; }
-        return;
+        if (response.ok) {
+            const result = response.body ? await response.json() : [];
+            return { result: result };
+        }
+        return [];
     
     } catch(err) {
         if(err.status) throw error(err.status, { message: err });
