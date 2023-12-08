@@ -8,12 +8,14 @@ export async function load({ fetch }) {
                 "Content-Type": "application/json"
             }
         });
+        console.log(response)
         if(!response.ok) {
             const err = await response.json();
             throw error(response.status, { message: err.error });
         }
         if (response.ok) {
-            const result = response.body ? await response.json() : [];
+            if(response.status === 204) return {result: []};
+            const result =  await response.json();
             return { result: result };
         }
         return [];
