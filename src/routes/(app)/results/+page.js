@@ -8,7 +8,6 @@ export async function load({ fetch }) {
                 "Content-Type": "application/json"
             }
         });
-        console.log(response)
         if(!response.ok) {
             const err = await response.json();
             throw error(response.status, { message: err.error });
